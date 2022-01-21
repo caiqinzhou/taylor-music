@@ -1,0 +1,41 @@
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="message">
+    {{message}}
+</div>
+<br/>
+<div id="control">
+    <button mat-raised-button color="primary" (click)="startGame()">Start Game</button>
+    &nbsp;
+    <button mat-raised-button color="primary" (click)="stopGame()">Stop Game</button>
+    &nbsp;
+    <button mat-raised-button color="primary" (click)="resetGame()">Reset Game</button>
+</div>
+
+<div class="score">
+    Score: {{score}}
+</div>
+<div class="counter">
+    <mat-icon>alarms</mat-icon>{{counter}} s
+</div>
+<!-- <div id="voice">
+    Voice: {{voice}}
+</div>
+<div>
+    Clef: {{questionKeys[questionIndex].clef}}, Key: {{questionKeys[questionIndex].key}}
+</div> -->
+<div id="question" class="question" #vexflowQuestion>
+</div>
+
+<div id="answer">
+    <button mat-fab class="my-fab" color="accent" (click)="answer(1)">1</button>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(2)">2</button>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(3)">3</button>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(4)">4</button>
+    <br>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(5)">5</button>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(6)">6</button>
+    <button mat-fab class="my-fab" color="accent" (click)="answer(7)">7</button>
+</div>
