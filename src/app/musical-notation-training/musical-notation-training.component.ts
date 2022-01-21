@@ -181,7 +181,7 @@ export class MusicalNotationTrainingComponent implements OnInit {
   }
 
   resetGame(): void {
-    this.message = "";
+    this.message = "Welcome to Taylor's musical training!";
     this.started = false;
     this.counter = 0;
     this.score = 0;
