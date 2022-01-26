@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RenderContext, Vex } from 'vexflow';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogData, SettingComponent } from './setting/setting.component';
 
 @Component({
   selector: 'app-musical-notation-training',
@@ -15,8 +17,10 @@ export class MusicalNotationTrainingComponent implements OnInit {
   message = "Welcome to Taylor's musical training!";
   counter = 0;
   score = 0;
+  error = 0;
   voice = "";
   counter_interval = 3;
+  answered = false;
   VF = Vex.Flow;
   context: RenderContext | undefined;
 
@@ -103,7 +107,7 @@ export class MusicalNotationTrainingComponent implements OnInit {
 
   questionIndex = 0;
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog) {
 
   }
 
@@ -154,8 +158,17 @@ export class MusicalNotationTrainingComponent implements OnInit {
     if (!this.started) {
       return;
     }
+    // if it's answered, set to the counter to 0, and start a new question.
+    if (this.answered) {
+      this.counter = 0;
+    }
     if (this.counter === 0) {
-      this.questionIndex = this.getRandomNumInt(0, this.questionKeys.length - 1);
+      let tempIndex = this.getRandomNumInt(0, this.questionKeys.length - 1);
+      while (tempIndex === this.questionIndex) {
+        tempIndex = this.getRandomNumInt(0, this.questionKeys.length - 1);
+      }
+      this.questionIndex = tempIndex;
+      this.answered = false;
     }
     this.showFlow()
     this.counter = this.counter <= 0 ? this.counter_interval : (this.counter - 1);
@@ -185,10 +198,11 @@ export class MusicalNotationTrainingComponent implements OnInit {
     this.started = false;
     this.counter = 0;
     this.score = 0;
+    this.error = 0;
   }
 
   answer(yourAnswer: number): void {
-    if (!this.started) {
+    if (!this.started || this.answered) {
       return;
     }
     if (yourAnswer === this.questionKeys[this.questionIndex].voice) {
@@ -198,7 +212,21 @@ export class MusicalNotationTrainingComponent implements OnInit {
     } else {
       this.message = "Oh no! It's " + this.questionKeys[this.questionIndex].voice;
       this._snackBar.open(this.message, "", { "duration": 1000, verticalPosition: "top" });
+      this.error++;
     }
+    this.answered = true;
+  }
+
+  openSetting(): void {
+    const dialogRef = this.dialog.open(SettingComponent, {
+      width: '250px',
+      data: { counter_interval: this.counter_interval },
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogData) => {
+      console.log('The dialog was closed');
+      this.counter_interval = result.counter_interval;
+    });
   }
 
   ngOnInit(): void {

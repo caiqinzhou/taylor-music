@@ -7,15 +7,17 @@
 </div>
 <br/>
 <div id="control">
-    <button mat-raised-button color="primary" (click)="startGame()">Start Game</button>
+    <button mat-raised-button color="primary" (click)="startGame()"><mat-icon>play_arrow</mat-icon></button>
     &nbsp;
-    <button mat-raised-button color="primary" (click)="stopGame()">Stop Game</button>
+    <button mat-raised-button color="primary" (click)="stopGame()"><mat-icon>pause</mat-icon></button>
     &nbsp;
-    <button mat-raised-button color="primary" (click)="resetGame()">Reset Game</button>
+    <button mat-raised-button color="primary" (click)="resetGame()"><mat-icon>refresh</mat-icon></button>
+    &nbsp;
+    <button mat-raised-button color="primary" (click)="openSetting()"><mat-icon>settings</mat-icon></button>
 </div>
 
 <div class="score">
-    Score: {{score}}
+    Score: {{score}} &nbsp;&nbsp;&nbsp;&nbsp; Error: {{error}}
 </div>
 <div class="counter">
     <mat-icon>alarms</mat-icon>{{counter}} s
